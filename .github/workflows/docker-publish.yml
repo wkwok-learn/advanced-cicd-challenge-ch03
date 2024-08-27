@@ -22,7 +22,6 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -91,6 +90,7 @@ jobs:
         run: cosign sign ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
   test:
     needs: [build]
+    runs-on: unbuntu-latest
     steps:
       - name: Test for 'container' in output
         run: |
