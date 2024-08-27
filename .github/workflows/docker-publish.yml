@@ -94,7 +94,7 @@ jobs:
     steps:
       - name: Test for 'container' in output
         run: |
-          if docker run ${{${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }} }} | grep container > /dev/null;
+          if docker run ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }} }} | grep container > /dev/null;
           then
             echo Test Passed
           else
