@@ -89,3 +89,15 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: cosign sign ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
+  test:
+    needs: [build]
+    steps:
+      - name: Test for 'container' in output
+        run: |
+          if docker run ${{${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }} }} | grep container > /dev/null;
+          then
+            echo Test Passed
+          else
+            echo Test Failed
+            exit 1
+          fi
